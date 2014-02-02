@@ -5,9 +5,9 @@ Android game to help teach spelling.  As you type letters, the word being typed 
 
 So if the dictionary knows about the word "APPLE"
 
-# Type A -> Only P is left on the keyboard
-# Type P -> Keyboard is left unchanged
-# Type P -> Only L is present on the keyboard
-# Type L -> Only E is present on the keyboard
-# Type E -> Picuture of an apple is shown.  Yay, you win!
+1. Type A -> Only P is left on the keyboard
+1. Type P -> Keyboard is left unchanged
+1. Type P -> Only L is present on the keyboard
+1. Type L -> Only E is present on the keyboard
+1. Type E -> Picuture of an apple is shown.  Yay, you win!
 
