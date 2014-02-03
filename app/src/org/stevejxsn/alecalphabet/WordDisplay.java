@@ -14,4 +14,16 @@ public class WordDisplay {
 		view.setText(view.getText() + s);
 	}
 
+	public CharSequence getText() {
+		return view.getText();
+	}
+
+	public TextView getView() {
+		return view;
+	}
+
+	public void clear() {
+		view.setText("");
+	}
+
 }

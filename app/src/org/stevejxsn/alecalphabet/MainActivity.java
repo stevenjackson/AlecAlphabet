@@ -1,29 +1,94 @@
 package org.stevejxsn.alecalphabet;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.os.Bundle;
+import android.provider.UserDictionary.Words;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AlecKeyboardListener {
 
-    @Override
+    private WordImage image;
+	private WordDisplay word;
+	private AlecKeyboard keyboard;
+	private AlecDictionary dictionary;
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WordDisplay word = new WordDisplay((TextView)findViewById(R.id.wordView));
-        setupKeyboard(word);
+        image = new WordImage((ImageView)findViewById(R.id.imageView));
+        word = new WordDisplay((TextView)findViewById(R.id.wordView));
+        keyboard = setupKeyboard(word);
+        dictionary = setupDictionary();
+        word.getView().setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent event) {
+				word.clear();
+				keyboard.reset();
+				image.clear();
+				return true;
+			}
+		});
     }
     
-    private void setupKeyboard(WordDisplay word) {
-    	KeyboardView keyboardView = (KeyboardView)findViewById(R.id.keyboardview);
-        keyboardView.setKeyboard(new Keyboard(this, R.xml.aleckbd));
-        keyboardView.setPreviewEnabled(false);
-        keyboardView.setOnKeyboardActionListener(new KeyboardListener(word));
+    private AlecKeyboard setupKeyboard(WordDisplay word) {
+    	AlecKeyboard keyboard = new AlecKeyboard((KeyboardView)findViewById(R.id.keyboardview), new Keyboard(this, R.xml.aleckbd));
+    	keyboard.setListener(this);
+    	return keyboard;
     }
-
+    
+    private AlecDictionary setupDictionary() {
+    	List<String> words = Arrays.asList(
+    		"ALEC", "APPLE",
+    		"BALL",
+    		"CAR",
+    		"DOG",
+    		"ELEPHANT",
+    		"FOX",
+    		"GRAPE",
+    		"HORSE",
+    		"IGLOO", "IGGY",
+    		"JAR",
+    		"KANGAROO",
+    		"LION",
+    		"MONKEY",
+    		"NEST",
+    		"ORANGE", "OTIS",
+    		"PANDA",
+    		"QUEEN",
+    		"RABBIT",
+    		"STRAWBERRY",
+    		"TIGER",
+    		"UMBRELLA",
+    		"VIOLIN",
+    		"WATERMELON",
+    		"XRAY",
+    		"YAK",
+    		"ZEBRA"
+    	);
+    	return new AlecDictionary(words);
+    }
+    
+    @Override
+	public void onLetterKey(char key) {
+		word.append(Character.toString(key));
+		String currentWord = word.getText().toString();
+		if(dictionary.isWord(currentWord)) {
+			image.updateImage(currentWord);
+		}
+		keyboard.setActiveKeys(dictionary.nextPossibleLetters(currentWord));
+	}
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
