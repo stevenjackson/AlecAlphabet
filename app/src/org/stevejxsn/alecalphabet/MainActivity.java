@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.os.Bundle;
-import android.provider.UserDictionary.Words;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MotionEvent;
