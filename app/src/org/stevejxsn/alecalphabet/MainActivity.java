@@ -29,15 +29,8 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
         word = new WordDisplay((TextView)findViewById(R.id.wordView));
         keyboard = setupKeyboard(word);
         dictionary = setupDictionary();
-        word.getView().setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View view, MotionEvent event) {
-				word.clear();
-				keyboard.reset();
-				image.clear();
-				return true;
-			}
-		});
+        word.getView().setOnTouchListener(resetOnTouchListener());
+        image.getView().setOnTouchListener(resetOnTouchListener());
     }
     
     private AlecKeyboard setupKeyboard(WordDisplay word) {
@@ -54,7 +47,7 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
     		"DOG",
     		"ELEPHANT",
     		"FOX",
-    		"GRAPE",
+    		"GRAPES",
     		"HORSE",
     		"IGLOO", "IGGY",
     		"JAR",
@@ -71,12 +64,22 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
     		"UMBRELLA",
     		"VIOLIN",
     		"WATERMELON",
-    		"XRAY",
+    		"XYLOPHONE",
     		"YAK",
     		"ZEBRA"
     	);
     	return new AlecDictionary(words);
     }
+    
+    private OnTouchListener resetOnTouchListener() {
+		return new OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent event) {
+				reset();
+				return true;
+			}
+		};
+	}
     
     @Override
 	public void onLetterKey(char key) {
@@ -94,6 +97,12 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    public void reset() {
+    	word.clear();
+		keyboard.reset();
+		image.clear();
     }
     
 }

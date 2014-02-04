@@ -67,8 +67,4 @@ public class AlecDictionary {
 		
 		return builder.toString().toCharArray();
 	}
-
-
-	
-
 }
