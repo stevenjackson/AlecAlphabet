@@ -18,10 +18,6 @@ public class WordDisplay {
 		return view.getText();
 	}
 
-	public TextView getView() {
-		return view;
-	}
-
 	public void clear() {
 		view.setText("");
 	}

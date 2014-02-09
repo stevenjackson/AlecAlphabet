@@ -1,8 +1,5 @@
 package org.stevejxsn.alecalphabet;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -19,67 +16,44 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
     private WordImage image;
 	private WordDisplay word;
 	private AlecKeyboard keyboard;
-	private AlecDictionary dictionary;
+	private WordChangeHandler wordChanged;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        image = new WordImage((ImageView)findViewById(R.id.imageView));
-        word = new WordDisplay((TextView)findViewById(R.id.wordView));
-        keyboard = setupKeyboard(word);
-        dictionary = setupDictionary();
-        word.getView().setOnTouchListener(resetOnTouchListener());
-        image.getView().setOnTouchListener(resetOnTouchListener());
+        image = createWordImage();
+        word = createWordDisplay();
+        keyboard = setupKeyboard();
+       
+        wordChanged = new WordChangeHandler(keyboard, image);
+        new MainActivityInitializer(wordChanged).start();
+      
     }
+
+	private WordDisplay createWordDisplay() {
+		TextView textView = (TextView)findViewById(R.id.wordView);
+		textView.setOnTouchListener(resetOnTouchListener());
+		return new WordDisplay(textView);
+	}
+	
+	private WordImage createWordImage() {
+		ImageView imageView = (ImageView)findViewById(R.id.imageView);
+		imageView.setOnTouchListener(resetOnTouchListener());
+		return new WordImage(imageView);
+	}
     
-    private AlecKeyboard setupKeyboard(WordDisplay word) {
+    private AlecKeyboard setupKeyboard() {
     	AlecKeyboard keyboard = new AlecKeyboard((KeyboardView)findViewById(R.id.keyboardview), new Keyboard(this, R.xml.aleckbd));
     	keyboard.setListener(this);
     	return keyboard;
     }
     
-    private AlecDictionary setupDictionary() {
-    	List<String> words = Arrays.asList(
-    		"ALEC", "APPLE",
-    		"BALL",
-    		"CAR",
-    		"DOG",
-    		"ELEPHANT",
-    		"FOX",
-    		"GRAPES",
-    		"HORSE",
-    		"IGLOO", "IGGY",
-    		"JAR",
-    		"KANGAROO",
-    		"LION",
-    		"MONKEY",
-    		"NEST",
-    		"ORANGE", "OTIS",
-    		"PANDA",
-    		"QUEEN",
-    		"RABBIT",
-    		"STRAWBERRY",
-    		"TIGER",
-    		"UMBRELLA",
-    		"VIOLIN",
-    		"WATERMELON",
-    		"XYLOPHONE",
-    		"YAK",
-    		"ZEBRA"
-    	);
-    	return new AlecDictionary(words);
-    }
-   
-    
     @Override
 	public void onLetterKey(char key) {
 		word.append(Character.toString(key));
 		String currentWord = word.getText().toString();
-		if(dictionary.isWord(currentWord)) {
-			image.updateImage(currentWord);
-		}
-		keyboard.setActiveKeys(dictionary.nextPossibleLetters(currentWord));
+		wordChanged.currentWordChanged(currentWord);
 	}
     
     public void reset() {

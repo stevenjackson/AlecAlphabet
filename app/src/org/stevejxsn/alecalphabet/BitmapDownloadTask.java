@@ -6,10 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-	WordImage image;
+public class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
+	private UrlImage image;
 
-	public DownloadImageTask(WordImage image) {
+	public BitmapDownloadTask(UrlImage image) {
 		this.image = image;
 	}
 	
@@ -29,6 +29,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	
 	@Override
 	protected void onPostExecute(Bitmap result) {
-		image.setImageBitmap(result);
+		image.setBitmap(result);
 	}
 }

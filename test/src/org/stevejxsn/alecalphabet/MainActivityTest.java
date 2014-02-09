@@ -12,5 +12,4 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 	public void testItDoesStuff() {
 		startActivity(new Intent(), null, null);
 	}
-
 }

@@ -13,12 +13,13 @@ public class AlecDictionary {
 		words = Collections.emptyList();
 	}
 
-	public AlecDictionary(List<String> words) {
+	public AlecDictionary(Collection<String> words) {
 		setWords(words);
 	}
 
-	public void setWords(List<String> words) {
+	public void setWords(Collection<String> words) {
 		this.words = new ArrayList<String>(words);
+		Collections.sort(this.words);
 	}
 
 	public char[] nextPossibleLetters(String text) {
