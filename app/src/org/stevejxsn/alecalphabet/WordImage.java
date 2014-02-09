@@ -23,7 +23,7 @@ public class WordImage {
 		if(handledSpecial(word)) return;
 
 		word = word.toLowerCase(Locale.US);
-		String url = "http://photographicdictionary.com/sites/photographicdictionary.com/files/photos/" + word.charAt(0) +"/" + word + ".jpg";
+		String url = "https://s3.amazonaws.com/alecalphabet/" + word + ".jpg";
 		new DownloadImageTask(view).execute(url);
 	}
 
