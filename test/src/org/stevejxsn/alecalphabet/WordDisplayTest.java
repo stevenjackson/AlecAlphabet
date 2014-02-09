@@ -18,13 +18,13 @@ public class WordDisplayTest extends AndroidTestCase {
 	
 	public void testAppendingCharToAView() {
 		word.append("A");
-		assertEquals("A", view.getText().toString());
+		assertEquals("A", word.getText());
 	}
 	
 	public void testAppendingTextToAView() {
 		word.append("A");
 		word.append("L");
-		assertEquals("AL", view.getText().toString());
+		assertEquals("AL", word.getText());
 	}
 	
 }

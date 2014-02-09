@@ -36,11 +36,11 @@ public class AlecDictionary {
 	}
 
 	private List<String> possibleWords(String text) {
-		List<String> filtered = longerWords(text);
 		List<String> possibleWords = new ArrayList<String>();
-		for(String word : filtered) 
+		for(String word : longerWords(text)) 
 			if(word.startsWith(text)) 
 				possibleWords.add(word);
+		
 		return possibleWords;
 	}
 

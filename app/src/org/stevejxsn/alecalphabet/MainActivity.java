@@ -70,6 +70,23 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
     	);
     	return new AlecDictionary(words);
     }
+   
+    
+    @Override
+	public void onLetterKey(char key) {
+		word.append(Character.toString(key));
+		String currentWord = word.getText().toString();
+		if(dictionary.isWord(currentWord)) {
+			image.updateImage(currentWord);
+		}
+		keyboard.setActiveKeys(dictionary.nextPossibleLetters(currentWord));
+	}
+    
+    public void reset() {
+    	word.clear();
+		keyboard.reset();
+		image.clear();
+    }
     
     private OnTouchListener resetOnTouchListener() {
 		return new OnTouchListener() {
@@ -82,27 +99,9 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
 	}
     
     @Override
-	public void onLetterKey(char key) {
-		word.append(Character.toString(key));
-		String currentWord = word.getText().toString();
-		if(dictionary.isWord(currentWord)) {
-			image.updateImage(currentWord);
-		}
-		keyboard.setActiveKeys(dictionary.nextPossibleLetters(currentWord));
-	}
-    
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
-    public void reset() {
-    	word.clear();
-		keyboard.reset();
-		image.clear();
-    }
-    
 }

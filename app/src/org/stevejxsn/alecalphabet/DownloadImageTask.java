@@ -5,13 +5,12 @@ import java.io.InputStream;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.widget.ImageView;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-	ImageView view;
+	WordImage image;
 
-	public DownloadImageTask(ImageView view) {
-		this.view = view;
+	public DownloadImageTask(WordImage image) {
+		this.image = image;
 	}
 	
 	@Override
@@ -30,6 +29,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	
 	@Override
 	protected void onPostExecute(Bitmap result) {
-	  view.setImageBitmap(result);
+		image.setImageBitmap(result);
 	}
 }

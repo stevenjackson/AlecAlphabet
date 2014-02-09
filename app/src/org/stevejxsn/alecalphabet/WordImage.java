@@ -3,12 +3,13 @@ package org.stevejxsn.alecalphabet;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
 public class WordImage {
 	private ImageView view;
-	private HashMap<String, Integer> KNOWN_WORDS = new HashMap<String, Integer>();
+	private static HashMap<String, Integer> KNOWN_WORDS = new HashMap<String, Integer>();
 	{
 		KNOWN_WORDS.put("OTIS", R.drawable.otis);
 		KNOWN_WORDS.put("IGGY", R.drawable.iggy);
@@ -24,16 +25,15 @@ public class WordImage {
 
 		word = word.toLowerCase(Locale.US);
 		String url = "https://s3.amazonaws.com/alecalphabet/" + word + ".jpg";
-		new DownloadImageTask(view).execute(url);
+		new DownloadImageTask(this).execute(url);
 	}
 
 	private boolean handledSpecial(String word) {
-		if(KNOWN_WORDS.containsKey(word)) {
+		boolean knownWord = KNOWN_WORDS.containsKey(word);
+		if(knownWord)
 			view.setImageResource(KNOWN_WORDS.get(word));
-			return true;
-		} else {
-			return false;
-		}
+		
+		return knownWord;
 	}
 
 	public void clear() {
@@ -42,5 +42,9 @@ public class WordImage {
 
 	public View getView() {
 		return view;
+	}
+
+	public void setImageBitmap(Bitmap bitmap) {
+		view.setImageBitmap(bitmap);
 	}
 }

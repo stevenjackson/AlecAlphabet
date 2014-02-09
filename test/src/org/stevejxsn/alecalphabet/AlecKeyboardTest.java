@@ -33,6 +33,15 @@ public class AlecKeyboardTest extends AndroidTestCase {
 		assertTrue(listener.wasCalled());
 	}
 	
+	public void testDisableAllAndReset() {
+		keyboard.disableAllKeys();
+		keyboard.keyPressed(listener, 'C');
+		assertFalse(listener.wasCalled());
+		
+		keyboard.reset();
+		keyboard.keyPressed(listener, 'C');
+		assertTrue(listener.wasCalled());
+	}
 	
 	
 	class ListenerSpy implements AlecKeyboardListener {
