@@ -30,7 +30,13 @@ public class MainActivityInitializer {
 	public void jsonRetrieved(JSONArray json) {
 		if(json == null) {
 			Log.e("AlecAlphabet", "Could not retrieve dictionary");
-		} try {
+		} else {
+			addWords(json);
+		}
+	}
+
+	private void addWords(JSONArray json) {
+		try {
 			dictionary.addWords(WordFactory.fromJSON(json));
 		} catch(JSONException ex) {
 			Log.e("AlecAlphabet", "Could not parse dictionary json", ex);

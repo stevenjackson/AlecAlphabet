@@ -11,11 +11,13 @@ public class WordChangeHandler {
 	private ResourceImage resourceHandler;
 	private AlecDictionary dictionary;
 	private Map<String, Word> words;
+	private WordSpeaker speaker;
 
-	public WordChangeHandler(AlecKeyboard keyboard, WordImage image) {
+	public WordChangeHandler(AlecKeyboard keyboard, WordImage image, WordSpeaker speaker) {
 		this.keyboard = keyboard;
 		this.urlHandler = new UrlImage(image);
 		this.resourceHandler = new ResourceImage(image);
+		this.speaker = speaker;
 		this.words = new HashMap<String, Word>();
 	}
 
@@ -33,6 +35,7 @@ public class WordChangeHandler {
 	public void currentWordChanged(String currentWord) {
 		if(dictionary.isWord(currentWord)) {
 			words.get(currentWord).updateImage();
+			speaker.speak(currentWord);
 		}
 		keyboard.setActiveKeys(dictionary.nextPossibleLetters(currentWord));
 	}

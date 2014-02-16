@@ -1,5 +1,6 @@
 package org.stevejxsn.alecalphabet;
 
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -25,8 +26,7 @@ public class MainActivity extends Activity implements AlecKeyboardListener {
         image = createWordImage();
         word = createWordDisplay();
         keyboard = setupKeyboard();
-       
-        wordChanged = new WordChangeHandler(keyboard, image);
+        wordChanged = new WordChangeHandler(keyboard, image, new WordSpeaker(this));
         new MainActivityInitializer(wordChanged).start();
       
     }
