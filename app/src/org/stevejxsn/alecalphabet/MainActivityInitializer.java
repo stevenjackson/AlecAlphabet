@@ -23,7 +23,8 @@ public class MainActivityInitializer {
 		return new Word[] {
 			Word.createWord("OTIS", R.drawable.otis),
 			Word.createWord("IGGY", R.drawable.iggy),
-			Word.createWord("ALEC", R.drawable.alec)
+			Word.createWord("ALEC", R.drawable.alec),
+			Word.createWord("STEVEN", R.drawable.alec)
 		};
 	}
 
