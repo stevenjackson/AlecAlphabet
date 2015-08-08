@@ -3,3 +3,9 @@ app/gen
 test/bin
 test/gen
 data/img
+out
+.gradle
+local.properties
+.idea/workspace.xml
+.idea/libraries
+.DS_Store
