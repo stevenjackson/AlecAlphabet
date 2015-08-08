@@ -24,11 +24,17 @@ public class WordSpeaker implements OnInitListener {
 
 	@Override
 	public void onInit(int status) {
-		tts.setLanguage(Locale.US);
+		if(status >= 0) {
+			tts.setLanguage(Locale.US);
+		} else {
+			tts = null;
+		}
 	}
 	
 	
 	public void speak(String s) {
+		if(tts == null) return;
+
 		tts.speak(s, TextToSpeech.QUEUE_FLUSH, TTS_PARAMS);
 	}
 
